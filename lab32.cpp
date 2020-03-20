@@ -5,41 +5,55 @@ using namespace std;
 
 int s=0,choise=1;
 
-int massive(int Mat[N][N],int NN){
+void massive(int Mat[N][N],int NN){
+  for (int j=0;j<NN;j++)
+  for (int i=0; i<NN; i++) Mat[j][i]=rand()%100/3.5;
+}
+
+void pm(int Mat[N][N],int NN){
   for (int j=0;j<NN;j++){
-  for (int i=0; i<NN; i++){
-     Mat[j][i]=rand()%100/3.5;
-     cout<<Mat[j][i]<<" ";
+    for (int i=0; i<NN; i++) {
+      if(Mat[j][i]<10) cout<<" ";
+      cout<<Mat[j][i]<<" ";
     }
-   cout<<"\n";
+    cout<<"\n";
   }
 }
-int summ(int Matr[N][N],int Num){
-  for(int a=0,b=N-1;a<=N/2,b>=N/2;a++,b--){
-    for(int c=0,d=N-1;c<=a,d>=N-1-a;c++,d--){
+
+int summ(int Matr[N][N],int Str){
+  int s=0;
+  if (Str<=N/2){
+    for(int a=0,b=N-1;a<=Str,b>=N-Str-1;a++,b--){
       if(b==a){
-        s+=Matr[a][c];
-        s+=Matr[a][d];
+        s+=Matr[Str][a];
       }
       else{
-      s+=Matr[a][c];
-      s+=Matr[a][d];
-      s+=Matr[b][c];
-      s+=Matr[b][d];
-    }
+      s+=Matr[Str][a];
+      s+=Matr[Str][b];
+      }
     }
   }
-  cout<<"\nSum : "<<s;
+  if(Str>N/2){
+    for(int a=0,b=N-1;a<=N-1-Str,b>=Str;a++,b--){
+      s+=Matr[Str][a];
+      s+=Matr[Str][b];
+    }
+  }
+  return s;
 }
 
 
 int main(){
-  do{
+ do{
     time_t k;
     srand (time(&k));
     int A[N][N];
     massive(A,N);
-    summ(A,N);
+    pm(A,N);
+    for(int i=0;i<N;i++){
+      s+=summ(A,i);
+    }
+    cout<<s;
     cout<<"Continue? ";
     cin>>choise;
   }while(choise!=0);
